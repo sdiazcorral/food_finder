@@ -23,3 +23,9 @@ APP_ROOT = File.dirname(__FILE__)
 # require only works with files already in Ruby's load path, which is why we add the new path via .unshift
 $:.unshift(File.join(APP_ROOT, "lib"))
 require 'guide'
+
+# Create a new Guide instance. The class is defined in guide.rb
+# It expects the path as an argument because thats how we set it up in the initialize method
+# Call the .launch! method for the new class instance
+guide = Guide.new("restaurants.txt")
+guide.launch!
