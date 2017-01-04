@@ -33,7 +33,34 @@ class Guide
     # repeat until user quits
     # conclusion
     introduction
+    result = nil # initialize variable so we can use it
+    until result == :quit
+      print "> "
+      # save the input in user_response var
+      user_response = gets.chomp
+
+      # do_action needs an argument
+      # send user_response value to do_action as an argument
+      result = do_action(user_response)
+    end
     conclusion
+  end
+
+  # do_action accepts an argument called action
+  def do_action(action)
+    case action
+    when "list"
+      puts "Listing..."
+    when "find"
+      puts "Finding..."
+    when "add"
+      puts "Adding..."
+    when "quit"
+      # send the symbol :quit
+      return :quit
+    else
+      puts "\n I don't understand that command.\n"
+    end
   end
 
   def introduction
