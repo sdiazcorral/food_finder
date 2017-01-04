@@ -13,9 +13,10 @@ class Guide
     # or create a new file
     # exit if create fails
     Restaurant.filepath = path
-    if Restaurant.file_exists?
+    if Restaurant.file_usable?
       puts "Found a restaurant file."
     elsif Restaurant.create_file
+      # if the returned boolean is true, it will do this
       puts "Created a new restaurant file."
     else
       puts "Exiting\n\n"
