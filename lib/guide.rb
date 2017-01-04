@@ -4,6 +4,16 @@
 require "restaurant"
 
 class Guide
+
+  class Config
+    # Set a class variable
+    @@actions = ["list", "find", "add", "quit"]
+    # Reader method to let me read the value of the class variable
+    def self.actions
+      # Return the value of the variable
+      @@actions
+    end
+  end
   # the guide will need the path to the restaurant file
   # we could hard code the path
   # but for flexibility, we'll pass the path as an argument
@@ -35,15 +45,27 @@ class Guide
     introduction
     result = nil # initialize variable so we can use it
     until result == :quit
+      # make sure input is valid by running it through get_action method
+      action = get_action
+      # do_action needs an argument
+      # send user_response value to do_action as an argument
+      result = do_action(action)
+    end
+    conclusion
+  end
+
+  def get_action
+    action = nil
+    # keep asking for user input until we get a valid action
+    until Guide::Config.actions.include?(action)
+      puts "Actions: " + Guide::Config.actions.join(", ") if action
       print "> "
       # save the input in user_response var
       user_response = gets.chomp
-
-      # do_action needs an argument
-      # send user_response value to do_action as an argument
-      result = do_action(user_response)
+      # we want to downcase it and strip to make sure it works with our list of actions
+      action = user_response.downcase.strip
     end
-    conclusion
+    return action
   end
 
   # do_action accepts an argument called action
