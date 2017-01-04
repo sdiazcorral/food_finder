@@ -4,6 +4,27 @@ class Restaurant
   # Class variable
   @@filepath = nil
 
+  def initialize(args={})
+    @name = args[:name] || ""
+    @cuisine = args[:cuisine] || ""
+    @price = args[:price] || ""
+  end
+
+  def self.build_using_questions
+    args = {}
+
+    print "Restaurant name: "
+    args[:name] = gets.chomp.strip
+
+    print "Cuisine type: "
+    args[:cuisine] = gets.chomp.strip
+
+    print "Average price: "
+    args[:price] = gets.chomp.strip
+
+    return self.new(args)
+  end
+
   # Setter method to set the filepath in guide.rb, init method
   def self.filepath=(path=nil)
     # The "path" you provide must be relative to the app root
