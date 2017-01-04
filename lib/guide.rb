@@ -1,3 +1,8 @@
+# Must require class because we are now using it here
+# Notice it's not using an absolute path because in the init.rb file
+# We already told it were to look for stuff i.e. the "lib" folder
+require "restaurant"
+
 class Guide
   # the guide will need the path to the restaurant file
   # we could hard code the path
@@ -7,6 +12,16 @@ class Guide
     # locate the restaurant text file at path
     # or create a new file
     # exit if create fails
+    Restaurant.filepath = path
+    if Restaurant.file_exists?
+      puts "Found a restaurant file."
+    elsif Restaurant.create_file
+      puts "Created a new restaurant file."
+    else
+      puts "Exiting\n\n"
+      # No matter where you are, abort script and return to command line
+      exit!
+    end
   end
 
   def launch!
@@ -16,11 +31,13 @@ class Guide
     #   do that action
     # repeat until user quits
     # conclusion
+    introduction
+    conclusion
   end
 
   def introduction
     puts "\n\n=== Welcome to the Food Finder ===\n\n"
-    puts "This is a small Ruby application to help you find the food you crave. Built by Stanley Diaz.\n\n"
+    puts "This is a small Ruby application to help you find the food you crave.\nBuilt by Stanley Diaz.\n\n"
   end
 
   def conclusion
