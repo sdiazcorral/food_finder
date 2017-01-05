@@ -1,29 +1,11 @@
+require "support/number_helper"
+
 class Restaurant
+  include NumberHelper
   attr_accessor :name, :cuisine, :price
 
   # Class variable
   @@filepath = nil
-
-  def initialize(args={})
-    @name = args[:name] || ""
-    @cuisine = args[:cuisine] || ""
-    @price = args[:price] || ""
-  end
-
-  def self.build_using_questions
-    args = {}
-
-    print "Restaurant name: "
-    args[:name] = gets.chomp.strip
-
-    print "Cuisine type: "
-    args[:cuisine] = gets.chomp.strip
-
-    print "Average price: "
-    args[:price] = gets.chomp.strip
-
-    return self.new(args)
-  end
 
   # Setter method to set the filepath in guide.rb, init method
   def self.filepath=(path=nil)
@@ -76,6 +58,27 @@ class Restaurant
     return restaurants
   end
 
+  def self.build_using_questions
+    args = {}
+
+    print "Restaurant name: "
+    args[:name] = gets.chomp.strip
+
+    print "Cuisine type: "
+    args[:cuisine] = gets.chomp.strip
+
+    print "Average price: "
+    args[:price] = gets.chomp.strip
+
+    return self.new(args)
+  end
+
+  def initialize(args={})
+    @name = args[:name] || ""
+    @cuisine = args[:cuisine] || ""
+    @price = args[:price] || ""
+  end
+
   def import_line(line)
     line_array = line.split("\t")
     @name, @cuisine, @price = line_array
@@ -90,5 +93,9 @@ class Restaurant
       file.puts "#{[@name, @cuisine, @price].join("\t")}\n"
     end
     return true
+  end
+
+  def formatted_price
+    number_to_currency(@price)
   end
 end
